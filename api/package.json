@@ -1,0 +1,28 @@
+{
+  "name": "magpie",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Magpie-Movies/MagPie.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Magpie-Movies/MagPie/issues"
+  },
+  "homepage": "https://github.com/Magpie-Movies/MagPie#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.1",
+    "express": "^4.17.3",
+    "express-basic-auth": "^1.2.1",
+    "nodemon": "^2.0.15",
+    "sequelize": "^6.18.0",
+    "sqlite3": "^5.0.2"
+  }
+}
