@@ -1,16 +1,16 @@
-const { Sequelize, DataTypes, Model } = require("sequelize");
-const { sequelize } = require("../db");
+const {Model, DataTypes} = require('sequelize')
+const db = require('../db');
 
 class Movie extends Model {}
-
-Movie.init(
-  {
+Movie.init({
     name: DataTypes.STRING,
-  },
-  {
-    sequelize,
+    release_date: DataTypes.DATE,
+    overview: DataTypes.STRING,
+    budget: DataTypes.FLOAT,
+    revenue: DataTypes.FLOAT
+}, {
+    sequelize: db,
     timestamps: false,
-  }
-);
+});
 
-module.exports = { Movie };
+module.exports ={Movie}
