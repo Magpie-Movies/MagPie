@@ -9,10 +9,14 @@ const {Movie} = require('./models/movie')
 
 const createUsers = async () => {
 
+    let pw1 = await bcrypt.hash('password', 10);
+    let pw2 = await bcrypt.hash('password', 10);
+    let pw3 = await bcrypt.hash('password', 10);
+
     const users = [
-        {name : 'Martin', password: '1234' },
-        {name : 'Lowella', password : 'password'},
-        {name : 'Saeed', password : 'secret'}
+        {username : 'Martin', password: pw1 },
+        {username : 'Lowella', password : pw2 },
+        {username : 'Saeed', password : pw3 }
     ];
 
     return users
