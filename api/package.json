@@ -19,8 +19,11 @@
   "homepage": "https://github.com/Magpie-Movies/MagPie#readme",
   "dependencies": {
     "bcrypt": "^5.0.1",
+    "bootstrap": "^5.1.3",
     "express": "^4.17.3",
     "express-basic-auth": "^1.2.1",
+    "express-jwt": "^6.1.1",
+    "jwks-rsa": "^2.0.5",
     "nodemon": "^2.0.15",
     "sequelize": "^6.18.0",
     "sqlite3": "^5.0.2"
