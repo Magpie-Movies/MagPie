@@ -6,8 +6,12 @@ const bcrypt = require("bcrypt");
 // set salt
 const saltRounds = 2;
 
+//require models and associations
+const initialiseDb = require('./index.js');
+initialiseDb();
+
 const { User } = require("./models/user");
-const { Movie } = require("./models/movie");
+
 const { use } = require("bcrypt/promises");
 
 // initialise Express
