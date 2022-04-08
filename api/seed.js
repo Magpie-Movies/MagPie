@@ -3,11 +3,11 @@ const fs = require('fs').promises;
 const bcrypt = require('bcrypt');
 
 const sequelize = require('./db');
-const {User} = require('./models/user')
+const { User } = require('./models/user')
 const initialiseDb = require('./index.js');
 
 initialiseDb();
-const {Movie} = require('./models/movie')
+const { Movie } = require('./models/movie')
 const { Category } = require('./models/category');
 const { Country } = require('./models/country')
 
