@@ -21,10 +21,29 @@ const { Country } = require("./models/country.js");
 // initialise Express
 const app = express();
 
+// serve static assets from the public/ folder
+app.use(express.static(__dirname + '/public'));
 // specify out request bodies are json
 app.use(express.json());
+// support the parsing of incoming requests with urlencoded payloads (e.g. form POST)
+app.use(express.urlencoded({ extended: false }));
 
-app.post("/users", async (req, res) => {
+var jwt = require("express-jwt");
+var jwks = require("jwks-rsa");
+
+// routes go here
+app.get("/", (req, res) => {
+});
+
+app.get('/signup', (req, res) => {
+  res.sendFile(__dirname + '/public/signup.html');
+})
+
+app.get('/signin', (req, res) => {
+  res.sendFile(__dirname + '/public/signin.html');
+})
+
+app.post("/signup", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
@@ -33,6 +52,24 @@ app.post("/users", async (req, res) => {
     res.json({ newUser });
   });
 });
+
+// var jwtCheck = jwt({
+//   secret: jwks.expressJwtSecret({
+//     cache: true,
+//     rateLimit: true,
+//     jwksRequestsPerMinute: 5,
+//     jwksUri: "https://dev-dd5lawjq.us.auth0.com/.well-known/jwks.json",
+//   }),
+//   audience: "http://localhost:3000",
+//   issuer: "https://dev-dd5lawjq.us.auth0.com/",
+//   algorithms: ["RS256"],
+// });
+
+// app.use(jwtCheck);
+
+// app.get("/authorized", function (req, res) {
+//   res.send("Secured Resource");
+// });
 
 app.use(
   basicAuth({
@@ -59,11 +96,6 @@ async function dbAuthorizer(username, password, callback) {
     callback(null, false);
   }
 }
-
-// routes go here
-app.get("/", (req, res) => {
-  res.send("<h1>App Running</h1>");
-});
 
 app.get("/users", async (req, res) => {
   const Allusers = await User.findAll();
