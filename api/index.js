@@ -3,23 +3,89 @@ const { Movie } = require('./models/movie');
 const { Category } = require('./models/category')
 const { Keyword } = require('./models/keyword')
 const { Country } = require('./models/country')
-
-
+const { Production_Company } = require('./models/production');
+const { Cast_Crew } = require('./models/cast_crew')
+const { Movie_Cast } = require('./models/movie_cast')
+const { Movie_Crew } = require('./models/movie_crew');
 
 async function initialiseDb() {
     Category.belongsToMany(Movie, {
         through: "Movie_Category",
         as: "movie",
-        foreignKey: "movie_id",
+        foreignKey: "category_id",
       });
       Movie.belongsToMany(Category, {
         through: "Movie_Category",
         as: "category",
-        foreignKey: "category_id",
+        foreignKey: "movie_id",
       });
 
-    // Movie.hasMany(Category)
-    // Category.belongsTo(Movie)
+      Keyword.belongsToMany(Movie, {
+        through: "Movie_Keywords",
+        as: "movie",
+        foreignKey: "keyword_id",
+      });
+      Movie.belongsToMany(Keyword, {
+        through: "Movie_Keywords",
+        as: "keyword",
+        foreignKey: "movie_id",
+      });
+
+      Country.belongsToMany(Movie, {
+        through: "Movie_Country",
+        as: "movie",
+        foreignKey: "country_id",
+      });
+      Movie.belongsToMany(Country, {
+        through: "Movie_Country",
+        as: "country",
+        foreignKey: "movie_id",
+      });
+
+      Production_Company.belongsToMany(Movie, {
+        through: "Movie_Production",
+        as: "movie",
+        foreignKey: "production_id",
+      });
+      Movie.belongsToMany(Production_Company, {
+        through: "Movie_Production",
+        as: "production_company",
+        foreignKey: "movie_id",
+      });
+
+      Cast_Crew.belongsToMany(Movie, {
+        through: Movie_Cast, Cast_Crew,
+        as: "movie",
+        foreignKey: "castCrew_id",
+      })
+      Movie.belongsToMany(Cast_Crew, {
+        through: Movie_Cast,
+        as: "cast_crew",
+        foreignKey: "movie_id",
+      })
+
+      Cast_Crew.belongsToMany(Movie, {
+        through: Movie_Crew,
+        as: "movieCrew",
+        foreignKey: "castCrew_id",
+      })
+      Movie.belongsToMany(Cast_Crew, {
+        through: Movie_Crew,
+        as: "movieCast_crew",
+        foreignKey: "movie_id",
+      })
+
+      // Cast_Crew.belongsToMany(Movie, {
+      //   through: Movie_Crew,
+      //   as: "movie",
+      //   foreignKey: "castCrew_id",
+      // })
+      // Movie.belongsToMany(Cast_Crew, {
+      //   through: Movie_Crew,
+      //   as: "cast_crew",
+      //   foreignKey: "movie_id",
+      // })
+
     await db.sync();
 }
 

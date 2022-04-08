@@ -6,9 +6,17 @@ const bcrypt = require("bcrypt");
 // set salt
 const saltRounds = 2;
 
+//require models and associations
+const initialiseDb = require('./index.js');
+initialiseDb();
+
 const { User } = require("./models/user");
-const { Movie } = require("./models/movie");
+
 const { use } = require("bcrypt/promises");
+const { Movie } = require("./models/movie.js");
+const { Cast_Crew } = require("./models/cast_crew.js");
+const { Category } = require("./models/category.js");
+const { Country } = require("./models/country.js");
 
 // initialise Express
 const app = express();
@@ -99,15 +107,107 @@ app.get("/users:id", async (req, res) => {
   res.json(user);
 });
 
-app.get("/movies", async (req, res) => {
-  const allMovies = await Movie.findAll();
-  res.json(allMovies);
+//movie route 
+//add movies
+app.post("/movies", async(req, res) => {
+  let newMovie = await Movie.create(req.body);
+  res.json({newMovie})
 });
 
-app.get("/movies:id", async (req, res) => {
-  const moviePK = await Movie.findByPk(req.params.id);
-  res.json(moviePK);
+//get all movies
+app.get("/api/movies", async (req, res) => {
+  const allMovies = await Movie.findAll();
+  res.json({allMovies});
 });
+
+//get movies by id
+app.get("/api/movies:id", async (req, res) => {
+  const moviePK = await Movie.findByPk(req.params.id);
+  res.json({moviePK});
+});
+
+//category 
+//add category entries to db
+app.post("/api/categories", async(req, res) => {
+  const newCategory = await Category.create(req.body);
+  res.json({newCategory});
+});
+
+app.get("/api/categories", async(req, res) => {
+  const allCategories = await Category.findAll();
+  res.json({allCategories});
+});
+
+//get category
+app.get("/api/categories:name", async(req, res) =>{
+  const getCategory = await Category.findAll({
+    where: {
+      name: req.params.name
+    }
+  })
+  res.json({getCategory});
+});
+
+//get category by id
+app.put("/api/categories:id", async(req, res) => {
+  const updateCategory = await Category.update(req.body, {
+    where: { 
+      id: req.params.id
+    }
+  })
+  res.json({updateCategory})
+})
+
+//delete categories
+app.delete('/api/categories:id', async(req, res)=> {
+  await Category.destroy({where: {id: req.params.id}});
+  res.send('Deleted!')
+})
+
+//country
+//add country entries to the db
+app.post("/api/countries", async(req, res) =>{
+  let newCountry = await Country.create(req.bod);
+  res.json({newCountry})
+})
+
+//get country by id
+app.get("/api/countries:id", async(req, res) =>{
+  let getCountry = await Country.findByPk(req.params.id);
+  res.json({getCountry})
+})
+
+//get country by name
+app.get("/api/countries:name", async(req, res) => {
+  let getCountry = await Country.findAll({
+    where: {
+      country_name: req.params.name
+    }
+  });
+  res.json({getCountry})
+})
+
+//update Country
+app.put("/api/countries:id", async(req, res) => {
+  const updateCountry = await Country.update(req.body, {
+    where: {
+      id: req.params.id
+    }
+  });
+  res.json(updateCountry)
+})
+
+//delete country
+app.delete("/api/countries:id", async(req, res) => {
+  await Country.destroy({where: {id: req.params.id}});
+  res.send('Deleted!')
+})
+
+app.post("/api/person", async(req, res) => {
+  let newPerson = await Cast_Crew.create(req.body);
+  res.json(newPerson);
+});
+
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");
