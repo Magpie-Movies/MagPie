@@ -2,7 +2,7 @@ const path = require('path');
 const fs = require('fs').promises;
 const bcrypt = require('bcrypt');
 
-const {sequelize} = require('./db');
+const sequelize = require('./db');
 const {User} = require('./models/user')
 const {Movie} = require('./models/movie')
 

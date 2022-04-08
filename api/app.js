@@ -24,9 +24,18 @@ var jwt = require("express-jwt");
 var jwks = require("jwks-rsa");
 
 // routes go here
-app.get("/", (req, res) => {});
+app.get("/", (req, res) => {
+});
 
-app.post("/users", async (req, res) => {
+app.get('/signup', (req, res) => {
+  res.sendFile(__dirname + '/public/signup.html');
+})
+
+app.get('/signin', (req, res) => {
+  res.sendFile(__dirname + '/public/signin.html');
+})
+
+app.post("/signup", async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
