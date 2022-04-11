@@ -13,6 +13,9 @@ const { Country } = require('./models/country');
 const { Keyword } = require('./models/keyword');
 const { Production_Company } = require('./models/production');
 const { Cast_Crew } = require('./models/cast_crew');
+const { Movie_Keywords } = require('./models/movie_keyword');
+const { Movie_Genre } = require('./models/movie_genre');
+const { Movie_Country } = require('./models/movie_country');
 
 
 const createUsers = async () => {
@@ -90,6 +93,24 @@ const productions = [
     {production_name: 'DC Films'}
 ];
 
+const movie_keywords = [
+    {keyword_id: 4, movie_id: 1},
+    {keyword_id: 6, movie_id: 3},
+    {keyword_id: 5, movie_id: 2}
+];
+
+const movie_genre = [
+    {genre_id: 5, movie_id: 1},
+    {genre_id: 5, movie_id: 3},
+    {genre_id: 5, movie_id: 2}
+];
+
+const movie_country = [
+    {country_id: 1, movie_id: 1},
+    {country_id: 1, movie_id: 3},
+    {country_id: 1, movie_id: 2}
+];
+
 const seed = async () => {
 
     await sequelize.sync({ force: true });
@@ -103,7 +124,11 @@ const seed = async () => {
     const keywordPromises = keywords.map(keyword => Keyword.create(keyword))
     const productionPromises = productions.map(production => Production_Company.create(production))
     const personPromises = persons.map(person => Cast_Crew.create(person))
-    await Promise.all([...userPromises, ...moviePromises, ...categoryPromises, ...countryPromises, ...keywordPromises, ...productionPromises, ...personPromises]);
+    const movieKeywordPromises = movie_keywords.map(movieKeyword => Movie_Keywords.create(movieKeyword))
+    const movieGenrePromises = movie_genre.map(movieGenre => Movie_Genre.create(movieGenre))
+    const movieCountryPromises = movie_country.map(movieCountry => Movie_Country.create(movieCountry))
+    await Promise.all([...userPromises, ...moviePromises, ...categoryPromises, ...countryPromises, ...keywordPromises, ...productionPromises, ...personPromises, 
+        ...movieKeywordPromises, ...movieGenrePromises, ...movieCountryPromises]);
     console.log("db populated!")
 }
 

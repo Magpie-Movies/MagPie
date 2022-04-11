@@ -19,6 +19,9 @@ const { Category } = require("./models/category.js");
 const { Country } = require("./models/country.js");
 const { Keyword } = require("./models/keyword.js");
 const { Production_Company } = require("./models/production.js");
+const { Movie_Keywords } = require("./models/movie_keyword");
+const { Movie_Genre } = require("./models/movie_genre");
+const { Movie_Country }  = require("./models/movie_country");
 
 // initialise Express
 const app = express();
@@ -260,6 +263,24 @@ app.get("/api/production", async(req, res) => {
 app.get("/api/production:id", async(req, res) => {
   let getProduction = await Production_Company.findByPk(req.params.id)
   res.json(getProduction)
+})
+
+//movie_keywords
+app.post("/api/movie_keywords", async(req,res) => {
+  let newMovieKeywords = await Movie_Keywords.create(req.body)
+  res.json({newMovieKeywords})
+})
+
+//movie_genre
+app.post("/api/movie_genre", async(req,res) => {
+  let newMovieGenre = await Movie_Genre.create(req.body)
+  res.json({newMovieGenre})
+})
+
+//movie_country
+app.post("/api/movie_country", async(req,res) => {
+  let newMovieCountry = await Movie_Country.create(req.body)
+  res.json({newMovieCountry})
 })
 
 app.listen(3000, () => {

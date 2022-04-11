@@ -10,12 +10,12 @@ const { Movie_Crew } = require('./models/movie_crew');
 
 async function initialiseDb() {
     Category.belongsToMany(Movie, {
-        through: "Movie_Category",
+        through: "Movie_Genre",
         as: "movie",
         foreignKey: "category_id",
       });
       Movie.belongsToMany(Category, {
-        through: "Movie_Category",
+        through: "Movie_Genre",
         as: "category",
         foreignKey: "movie_id",
       });
