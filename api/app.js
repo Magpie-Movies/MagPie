@@ -17,6 +17,8 @@ const { Movie } = require("./models/movie.js");
 const { Cast_Crew } = require("./models/cast_crew.js");
 const { Category } = require("./models/category.js");
 const { Country } = require("./models/country.js");
+const { Keyword } = require("./models/keyword.js");
+const { Production_Company } = require("./models/production.js");
 
 // initialise Express
 const app = express();
@@ -30,9 +32,6 @@ app.use(express.urlencoded({ extended: false }));
 
 var jwt = require("express-jwt");
 var jwks = require("jwks-rsa");
-const { Keyword } = require("./models/keyword.js");
-const { Cast } = require("sequelize/types/utils");
-const { Production_Company } = require("./models/production.js");
 
 // routes go here
 app.get("/", (req, res) => {
