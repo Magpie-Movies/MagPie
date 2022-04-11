@@ -30,6 +30,9 @@ app.use(express.urlencoded({ extended: false }));
 
 var jwt = require("express-jwt");
 var jwks = require("jwks-rsa");
+const { Keyword } = require("./models/keyword.js");
+const { Cast } = require("sequelize/types/utils");
+const { Production_Company } = require("./models/production.js");
 
 // routes go here
 app.get("/", (req, res) => {
@@ -203,11 +206,62 @@ app.delete("/api/countries:id", async(req, res) => {
   res.send('Deleted!')
 })
 
+//keywords
+//add keywords entries to the db
+app.post("/api/keywords", async(req, res) => {
+  let newKeyword = await Keyword.create(req.body);
+  res.json(newKeyword);
+});
+
+//get keywords
+app.get("/api/keywords", async(req, res) => {
+  let allKeywords = await Keyword.findAll();
+  res.json({allKeywords})
+})
+
+//get keywords by id
+app.get("/api/keywords:id", async(req, res) => {
+  let getKeywords = await Keyword.findByPk(req.params.id)
+  res.json(getKeywords)
+})
+
+//Cast_Crew
+//add Cast_Crew entries to the db
 app.post("/api/person", async(req, res) => {
   let newPerson = await Cast_Crew.create(req.body);
   res.json(newPerson);
 });
 
+//get person
+app.get("/api/person", async(req, res) => {
+  let allPerson = await Cast_Crew.findAll();
+  res.json(allPerson)
+})
+
+//get cast crew by id
+app.get("/api/person:id", async(req, res) => {
+  let getPeron = await Cast_Crew.findByPk(req.params.id)
+  res.json(getPerson)
+})
+
+//Production_Company
+//add production entries to the db
+app.post("/api/production", async(req, res) => {
+  let newProduction = await Production_Company.create(req.body);
+  res.json(newProduction);
+});
+
+//get production
+app.get("/api/production", async(req, res) => {
+  let allProduction = await Production_Company.findAll();
+  res.json(allProduction)
+})
+
+//get production by id
+app.get("/api/production:id", async(req, res) => {
+  let getProduction = await Production_Company.findByPk(req.params.id)
+  res.json(getProduction)
+})
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");

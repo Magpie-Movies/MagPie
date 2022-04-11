@@ -9,7 +9,10 @@ const initialiseDb = require('./index.js');
 initialiseDb();
 const { Movie } = require('./models/movie')
 const { Category } = require('./models/category');
-const { Country } = require('./models/country')
+const { Country } = require('./models/country');
+const { Keyword } = require('./models/keyword');
+const { Production_Company } = require('./models/production');
+const { Cast_Crew } = require('./models/cast_crew');
 
 
 const createUsers = async () => {
@@ -29,9 +32,19 @@ const createUsers = async () => {
 
 
 const movies = [
-    {name : 'Spiderman: No Way Home'},
-    {name : 'Batman'},
-    {name : 'Sonic the hedgehog'}
+    {name : 'Spiderman: No Way Home', release_date: '12/17/2021',
+    overview:"With Spider-Man's identity now revealed, our friendly neighborhood web-slinger is unmasked and no longer able to separate his normal life as Peter Parker from the high stakes of being a superhero. When Peter asks for help from Doctor Strange, the stakes become it truly means to be Spider-Man",
+    budget: 200000000.00,
+    revenue: 189000000000.00},
+    {name : 'The Batman', 
+    release_date: '3/04/2022', 
+    overview: "Batman ventures into Gotham City's underworld when a sadistic killer leaves behind a trail of cryptic clues. As the evidence begins to lead closer to home and the scale of the perpetrator's plans become clear, he must forge new relationships, unmask the culprit and bring justice to the abuse of power and corruption that has long plagued the metropolis.",
+    budget: 185000000.00,
+    revenue: 247000000.00 },
+    {name : 'Sonic the hedgehog 2', release_date: '4/8/2022',
+    overview: "After settlig in Green Hills, Sonic is eager to prove that he has what it takes to be a true hero. His test comes when Dr. Robotnik returns with a new partner, Knuckles, in search of a mystical emerald that has the power to destroy civilizations. Sonic teams up with his own sidekick, Tails, and together they embark on a globe-trotting journey to find the emerald before it falls into the wrong hands",
+    budget: 110000000.00,
+    revenue: 71000000.00}
 ];
 
 const categories = [
@@ -52,6 +65,30 @@ const countries = [
     {country_name: 'Korea'}
 ];
 
+const keywords = [
+    {keyword_name: 'Suspense'},
+    {keyword_name: 'Horror'},
+    {keyword_name: 'Drama'},
+    {keyword_name: 'Fiction Spiderman'},
+    {keyword_name: 'Batman'},
+    {keyword_name: 'Sonic the hedgeHog'}
+];
+
+const persons = [
+    {name: 'Tom Holland'},
+    {name: 'Tobey Maguire'},
+    {name: 'Robert Pattinson'},
+    {name: 'Jim Carrey'},
+    {name: 'Idris Elba'}
+];
+
+const productions = [
+    {production_name: 'Columbia Pictures'},
+    {production_name: 'Sony Pictures'},
+    {production_name: 'Warner Bros. Pictures'},
+    {production_name: 'Paramount Pictures Studios'},
+    {production_name: 'DC Films'}
+];
 
 const seed = async () => {
 
@@ -63,7 +100,10 @@ const seed = async () => {
     const moviePromises = movies.map(movie => Movie.create(movie))
     const categoryPromises = categories.map(category => Category.create(category))
     const countryPromises = countries.map(country => Country.create(country))
-    await Promise.all([...userPromises, ...moviePromises, ...categoryPromises, ...countryPromises]);
+    const keywordPromises = keywords.map(keyword => Keyword.create(keyword))
+    const productionPromises = productions.map(production => Production_Company.create(production))
+    const personPromises = persons.map(person => Cast_Crew.create(person))
+    await Promise.all([...userPromises, ...moviePromises, ...categoryPromises, ...countryPromises, ...keywordPromises, ...productionPromises, ...personPromises]);
     console.log("db populated!")
 }
 
