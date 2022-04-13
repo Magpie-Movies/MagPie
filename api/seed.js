@@ -16,6 +16,9 @@ const { Cast_Crew } = require('./models/cast_crew');
 const { Movie_Keywords } = require('./models/movie_keyword');
 const { Movie_Genre } = require('./models/movie_genre');
 const { Movie_Country } = require('./models/movie_country');
+const { Movie_Production } = require("./models/movie_production");
+const { Movie_Cast } = require("./models/movie_cast");
+const { Movie_Crew } = require('./models/movie_crew');
 
 
 const createUsers = async () => {
@@ -73,7 +76,7 @@ const keywords = [
     {keyword_name: 'Horror'},
     {keyword_name: 'Drama'},
     {keyword_name: 'Fiction Spiderman'},
-    {keyword_name: 'Batman'},
+    {keyword_name: 'Batman Columbia Fiction '},
     {keyword_name: 'Sonic the hedgeHog'}
 ];
 
@@ -82,7 +85,10 @@ const persons = [
     {name: 'Tobey Maguire'},
     {name: 'Robert Pattinson'},
     {name: 'Jim Carrey'},
-    {name: 'Idris Elba'}
+    {name: 'Idris Elba'},
+    {name: 'Jeff Fowler'},
+    {name: 'Jon Watts'},
+    {name: 'Matt Reeves'}
 ];
 
 const productions = [
@@ -111,6 +117,24 @@ const movie_country = [
     {country_id: 1, movie_id: 2}
 ];
 
+const movie_production = [
+    {production_id: 3, movie_id: 1},
+    {production_id: 2, movie_id: 3},
+    {production_id: 5, movie_id: 2}
+];
+
+const movie_cast = [
+    {castCrew_id: 1, movie_id: 1, character_name: "Peter Parker"},
+    {castCrew_id: 4, movie_id: 3, character_name: "Doctor Eggman"},
+    {castCrew_id: 3, movie_id: 2, character_name: "Bruce Wayne"}
+];
+
+const movie_crew = [
+    {castCrew_id: 7, movie_id: 1, department: "Direction", job: "Director"},
+    {castCrew_id: 6, movie_id: 3, department: "Direction", job: "Director"},
+    {castCrew_id: 8, movie_id: 2, department: "Direction", job: "Director"}
+];
+
 const seed = async () => {
 
     await sequelize.sync({ force: true });
@@ -127,8 +151,11 @@ const seed = async () => {
     const movieKeywordPromises = movie_keywords.map(movieKeyword => Movie_Keywords.create(movieKeyword))
     const movieGenrePromises = movie_genre.map(movieGenre => Movie_Genre.create(movieGenre))
     const movieCountryPromises = movie_country.map(movieCountry => Movie_Country.create(movieCountry))
+    const movieCastPromises = movie_cast.map(movieCast => Movie_Cast.create(movieCast))
+    const movieProductionPromises = movie_production.map(movieProduction => Movie_Production.create(movieProduction))
+    const movieCrewPromises = movie_crew.map(movieCrew => Movie_Crew.create(movieCrew))
     await Promise.all([...userPromises, ...moviePromises, ...categoryPromises, ...countryPromises, ...keywordPromises, ...productionPromises, ...personPromises, 
-        ...movieKeywordPromises, ...movieGenrePromises, ...movieCountryPromises]);
+        ...movieKeywordPromises, ...movieGenrePromises, ...movieCountryPromises, ...movieProductionPromises, ...movieCastPromises, ...movieCrewPromises]);
     console.log("db populated!")
 }
 
