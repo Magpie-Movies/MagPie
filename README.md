@@ -45,8 +45,25 @@ If your README is very long, you might want to add a table of contents to make i
 
 *The quality of a README description often differentiates a good project from a bad project. A good one takes advantage of the opportunity to explain and showcase:
 
-*What your application does,
+#### *What your application does(user stories)?
+As a user, I want to be able to login to my account, so that I can access my account.
 
-*Why you used the technologies you used,
+As a user, I want my sensitive information encrypted, so that I can have higher levels of account security.
 
-*Some of the challenges you faced and features you hope to implement in the future.
+As a signed in user, I want to be granted authorization to my movie service, so that I have proper authorization to view it.
+
+As a user, I want to have my favorite movies saved, so that I can access them at a later time.
+
+As a user, I want to have various subscription options, so that I pick from a selection of choices.
+
+
+#### *What technologies you used?
+NODEJS, sqlite3, Bootstrap 4, CSS3 and HTML 5, bcrypt, dotenv, express, express-basic-auth, express-jwt,
+jsonwebtoken, jwks-rsa, nodemon, sequelize.
+
+#### *Some of the challenges you faced and features you hope to implement in the future.
+AS a developer learning tokens and authenticating users was a challenge to implement initially.
+
+As a backend developer multiple queries and updating tables was an initial challenge for me.
+
+As a product manager looking for features that are in aligin with user's expectation was a challenge for MVP(minimum viable product ).
