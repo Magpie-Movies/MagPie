@@ -81,31 +81,31 @@ app.post("/signup", async (req, res) => {
 //   res.send("Secured Resource");
 // });
 
-// app.use(
-//   basicAuth({
-//     authorizer: dbAuthorizer,
-//     authorizeAsync: true,
-//     unauthorizedResponse: () => "You do not have access to this content",
-//   })
-// );
+app.use(
+  basicAuth({
+    authorizer: dbAuthorizer,
+    authorizeAsync: true,
+    unauthorizedResponse: () => "You do not have access to this content",
+  })
+);
 
 //function to compare username and password
 // return  boolean indicating a password match
-// async function dbAuthorizer(username, password, callback) {
-//   try {
-//     // get matching user
-//     const user = await User.findOne({ where: { username: username } });
-//     // if username is valid compare passwords
-//     let isValid =
-//       user != null ? await bcrypt.compare(password, user.password) : false;
-//     callback(null, isValid);
-//     console.log("isValid", isValid);
-//   } catch (err) {
-//     //if authorize fails, log error
-//     console.log("Error ", err);
-//     callback(null, false);
-//   }
-// }
+async function dbAuthorizer(username, password, callback) {
+  try {
+    // get matching user
+    const user = await User.findOne({ where: { username: username } });
+    // if username is valid compare passwords
+    let isValid =
+      user != null ? await bcrypt.compare(password, user.password) : false;
+    callback(null, isValid);
+    console.log("isValid", isValid);
+  } catch (err) {
+    //if authorize fails, log error
+    console.log("Error ", err);
+    callback(null, false);
+  }
+}
 
 app.get("/users", async (req, res) => {
   const Allusers = await User.findAll();
@@ -141,14 +141,6 @@ app.get("/api/movies/search/keywords/:keywords", async(req, res) => {
   console.log([].concat(req.params.keywords))
   const movies = await Movie.findAll({
     include: {model: Keyword, where: { keyword_name: { [Op.like]: `%${req.params.keywords}%`}}
-  }})
-  res.json({movies})
-})
-
-app.get("/api/movies/search/keywords/", async(req, res) => {
-  console.log([].concat(req.params.keywords))
-  const movies = await Movie.findAll({
-    include: {model: Keyword, where: { keyword_name: { [Op.or]: ["Fiction Spiderman", "Batman"]}}
   }})
   res.json({movies})
 })
