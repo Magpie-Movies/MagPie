@@ -19,22 +19,46 @@
     <a class="py-2" href="#" aria-label="Product">
       <img src="./img/MagPie.jpg" width="44" height="44" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img" viewBox="0 0 24 24"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></img>
     </a>
-    <a class="py-2 d-none d-md-inline-block" href="/signup">Register</a>
-    <a class="py-2 d-none d-md-inline-block" href="/signin">Login</a>
     <!-- <a class="py-2 d-none d-md-inline-block" href="#" hidden>Logout</a> -->
   </nav>
 </header>
 
-<main >
-  <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
-    <img src="./img/movieBackground.jpg" width="550px" height="300px">
-      <h1 class="display-4 fw-normal">MagPie Flims</h1>
-      <p class="lead fw-normal">An API that allows you to view a variety of different movies</p>
-      <a class="btn btn-outline-secondary" href="api.html">Take a look at our API!</a>
+<div class="container">
+     <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+         <img src="./img/movieBackground.jpg" width="550px" height="300px">
     </div>
-    <div class="product-device shadow-sm d-none d-md-block"></div>
-    <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
-  </div>
-</main>
+    <h3>Try it</h3>
+    <p>Run this code here</p>
+    <div class="form-group">
+        <textarea class="form-control" id="exampleFormControlTextarea3" rows="4"></textarea>
+    </br>
+    </div>
+    <div>
+        <button type="button" class="btn btn-info btn_rounded">Run script</button>
+    </div>
+    <div class="form-group">
+    </br>
+        <textarea class="form-control" id="exampleFormControlTextarea3" rows="4">{}</textarea>
+    </br>
+    </div>
+    <h2>Routes</h2>
+    <p>All HTTP methods are supported.</p>
+    <div>
+        <table class="table">
+            <thead>
+            </thead>
+            <tbody>
+              <tr>
+                <td>GET</td>
+                <td>/api/movies</td>
+              </tr>
+              <tr>
+                <td>GET</td>
+                <td>/api/movies/1</td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</div>
 </body>
 </html>
