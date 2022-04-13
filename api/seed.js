@@ -4,21 +4,7 @@ const bcrypt = require('bcrypt');
 
 const sequelize = require('./db');
 const { User } = require('./models/user')
-const initialiseDb = require('./index.js');
-
-initialiseDb();
-const { Movie } = require('./models/movie')
-const { Category } = require('./models/category');
-const { Country } = require('./models/country');
-const { Keyword } = require('./models/keyword');
-const { Production_Company } = require('./models/production');
-const { Cast_Crew } = require('./models/cast_crew');
-const { Movie_Keywords } = require('./models/movie_keyword');
-const { Movie_Genre } = require('./models/movie_genre');
-const { Movie_Country } = require('./models/movie_country');
-const { Movie_Production } = require("./models/movie_production");
-const { Movie_Cast } = require("./models/movie_cast");
-const { Movie_Crew } = require('./models/movie_crew');
+const { Movie, Category, Keyword,Country, Production_Company, Cast_Crew, Movie_Cast, Movie_Crew, Movie_Keywords,Movie_Genre, Movie_Country, Movie_Production} = require("./index.js")
 
 
 const createUsers = async () => {
@@ -106,9 +92,9 @@ const movie_keywords = [
 ];
 
 const movie_genre = [
-    {genre_id: 5, movie_id: 1},
-    {genre_id: 5, movie_id: 3},
-    {genre_id: 5, movie_id: 2}
+    {category_id: 5, movie_id: 1},
+    {category_id: 5, movie_id: 3},
+    {category_id: 5, movie_id: 2}
 ];
 
 const movie_country = [

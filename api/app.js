@@ -1,5 +1,4 @@
 require('dotenv').config();
-
 const express = require("express");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -11,24 +10,10 @@ const bcrypt = require("bcrypt");
 const saltRounds = 2;
 
 //require models and associations
-const initialiseDb = require("./index.js");
-initialiseDb();
-
+const { Movie, Category, Keyword,Country, Production_Company, Cast_Crew, Movie_Cast, Movie_Crew, Movie_Keywords,Movie_Genre, Movie_Country, Movie_Production} = require("./index.js")
 const { User } = require("./models/user");
 
 const { use } = require("bcrypt/promises");
-const { Movie } = require("./models/movie.js");
-const { Cast_Crew } = require("./models/cast_crew.js");
-const { Category } = require("./models/category.js");
-const { Country } = require("./models/country.js");
-const { Keyword } = require("./models/keyword.js");
-const { Production_Company } = require("./models/production.js");
-const { Movie_Keywords } = require("./models/movie_keyword");
-const { Movie_Genre } = require("./models/movie_genre");
-const { Movie_Country }  = require("./models/movie_country");
-const { Movie_Production } = require("./models/movie_production");
-const { Movie_Cast } = require("./models/movie_cast");
-const { Movie_Crew } = require("./models/movie_crew");
 
 // initialise Express
 const app = express();
@@ -152,11 +137,29 @@ app.get("/api/movies/:id", authenticateToken, async (req, res) => {
 });
 
 //get movies by keywords
+// app.get("/api/movies/search/keywords/:keywords", authenticateToken, async(req, res) => {
+//   console.log([].concat(req.params.keywords))
+//   const movies = await Movie.findAll({
+//     include: {model: Keyword, where: { keyword_name: { [Op.like]: `%${req.params.keywords}%`}}
+//   }})
+//   res.json({movies})
+// })
+
+// //get movies by keywords
 app.get("/api/movies/search/keywords/:keywords", authenticateToken, async(req, res) => {
-  console.log([].concat(req.params.keywords))
   const movies = await Movie.findAll({
-    include: {model: Keyword, where: { keyword_name: { [Op.like]: `%${req.params.keywords}%`}}
-  }})
+    include: [
+      {
+        model: Keyword, where: { keyword_name: {[Op.like]: `%${req.params.keywords}%`}}
+      },
+      {
+        model: Cast_Crew, as: "cast_crew"
+      },
+      {
+        model: Cast_Crew, as: "movieCast_crew"
+      }
+    ]
+  })
   res.json({movies})
 })
 

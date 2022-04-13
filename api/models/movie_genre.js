@@ -5,7 +5,6 @@ class Movie_Genre extends Model {}
 
 Movie_Genre.init(
   {
-    genre_id: DataTypes.INTEGER,
     movie_id: DataTypes.INTEGER,
   },
   {
