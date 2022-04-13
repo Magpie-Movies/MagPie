@@ -184,13 +184,13 @@ app.get("/api/categories/name/:name", authenticateToken, async(req, res) =>{
 });
 
 //get category by id
-app.get("/api/categories/id/:id", async(req, res) => {
+app.get("/api/categories/id/:id", authenticateToken, async(req, res) => {
   const getCategory = await Category.findByPk(req.params.id)
   res.json({getCategory})
 })
 
 //update categories
-app.put('/api/categories/:id', async(req, res)=> {
+app.put('/api/categories/:id', authenticateToken, async(req, res)=> {
   let updateCategory = await Category.update(req.body, {
     where : {id : req.params.id}
   });
@@ -198,32 +198,32 @@ app.put('/api/categories/:id', async(req, res)=> {
 })
 
 //delete categories
-app.delete('/api/categories/:id', async(req, res)=> {
+app.delete('/api/categories/:id', authenticateToken, async(req, res)=> {
   await Category.destroy({where: {id: req.params.id}});
   res.send('Deleted!')
 })
 
 //country
 //add country entries to the db
-app.post("/api/countries", async (req, res) => {
+app.post("/api/countries", authenticateToken, async (req, res) => {
   let newCountry = await Country.create(req.bod);
   res.json({ newCountry });
 });
 
 //get all countries
-app.get("/api/countries", async(req, res) => {
+app.get("/api/countries", authenticateToken, async(req, res) => {
   const allCountries = await Country.findAll();
   res.json({allCountries});
 });
 
 //get country by id
-app.get("/api/countries/id/:id", async(req, res) =>{
+app.get("/api/countries/id/:id", authenticateToken, async(req, res) =>{
   let getCountry = await Country.findByPk(req.params.id);
   res.json({ getCountry });
 });
 
 //get country by name
-app.get("/api/countries/name/:name", async(req, res) => {
+app.get("/api/countries/name/:name", authenticateToken, async(req, res) => {
   let getCountry = await Country.findAll({
     where: {
       country_name: req.params.name,
@@ -233,7 +233,7 @@ app.get("/api/countries/name/:name", async(req, res) => {
 });
 
 //update Country 
-app.put("/api/countries/:id", async(req, res) => {
+app.put("/api/countries/:id", authenticateToken, async(req, res) => {
   const updateCountry = await Country.update(req.body, {
     where: {
       id: req.params.id,
@@ -243,32 +243,32 @@ app.put("/api/countries/:id", async(req, res) => {
 });
 
 //delete country
-app.delete("/api/countries/:id", async(req, res) => {
+app.delete("/api/countries/:id", authenticateToken, async(req, res) => {
   await Country.destroy({where: {id: req.params.id}});
   res.send('Deleted!')
 })
 
 //keywords
 //add keywords entries to the db
-app.post("/api/keywords", async(req, res) => {
+app.post("/api/keywords", authenticateToken, async(req, res) => {
   let newKeyword = await Keyword.create(req.body);
   res.json(newKeyword);
 });
 
 //get keywords
-app.get("/api/keywords", async(req, res) => {
+app.get("/api/keywords", authenticateToken, async(req, res) => {
   let allKeywords = await Keyword.findAll();
   res.json({allKeywords})
 })
 
 //get keywords by id
-app.get("/api/keywords/id/:id", async(req, res) => {
+app.get("/api/keywords/id/:id", authenticateToken, async(req, res) => {
   let getKeywords = await Keyword.findByPk(req.params.id)
   res.json({getKeywords})
 })
 
 //get keywords by name
-app.get("/api/keywords/name/:name", async(req, res) => {
+app.get("/api/keywords/name/:name", authenticateToken, async(req, res) => {
   let getKeywords = await Keyword.findAll({
     where: {
       keyword_name: req.params.name
@@ -278,7 +278,7 @@ app.get("/api/keywords/name/:name", async(req, res) => {
 })
 
 //update keywords 
-app.put("/api/keywords/:id", async(req, res) => {
+app.put("/api/keywords/:id", authenticateToken, async(req, res) => {
   const updateKeyword = await Keyword.update(req.body, {
     where: {
       id: req.params.id
@@ -288,14 +288,14 @@ app.put("/api/keywords/:id", async(req, res) => {
 })
 
 //delete keyword
-app.delete("/api/keywords/:id", async(req, res) => {
+app.delete("/api/keywords/:id", authenticateToken, async(req, res) => {
   await Keyword.destroy({where: {id: req.params.id}});
   res.send('Deleted!')
 })
 
 //Cast_Crew
 //add Cast_Crew entries to the db
-app.post("/api/person", async(req, res) => {
+app.post("/api/person", authenticateToken,  async(req, res) => {
   let newPerson = await Cast_Crew.create(req.body);
   res.json(newPerson);
 });
