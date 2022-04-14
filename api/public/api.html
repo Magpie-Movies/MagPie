@@ -12,7 +12,7 @@
     />
     <style>
         .form-control {
-            background-color: #0d0c0c;
+            background-color: #0a0a0a !important;;
             color: rgb(232, 242, 239);
         }
         .test-api {
@@ -50,8 +50,10 @@
     <h3>Try it</h3>
     <p>Run this code here</p>
     <form action="/" method="get">
-    <div class="form-group">
-        <textarea class="form-control" id="routes" rows="4"></textarea>
+      <div class="form-group">
+        <textarea class="form-control test-api" id="routes" rows="4" readonly>fetch('http://localhost:3000/api/movies/search/id/1')
+          .then(response => response.json())
+          .then(json => console.log(json))</textarea>
     </br>
     </div>
     <div>
@@ -60,27 +62,62 @@
     </form>
     <div class="form-group">
     </br>
-        <textarea class="form-control" id="output" rows="4">{}</textarea>
+        <textarea class="form-control" id="output" rows="4" readonly>{}</textarea>
     </br>
     </div>
     <h2>Routes</h2>
     <p>All HTTP methods are supported.</p>
     <div>
-        <table class="table">
-            <thead>
-            </thead>
-            <tbody>
-              <tr>
-                <td>GET</td>
-                <td><a href="/api/movies">/api/movies</a></td>
-              </tr>
-              <tr>
-                <td>GET</td>
-                <td><a href="/api/movies/1">/api/movies/1</a></td>
-              </tr>
-            </tbody>
-          </table>
-          <table id="employees"></table>
+      <table class="table">
+        <thead>
+        </thead>
+        <tbody>
+          <tr>
+            <td>GET</td>
+            <td><a href="http://localhost:3000/api/movies" target="_blank">/api/movies</a></td>
+          </tr>
+          <tr>
+            <td>GET</td>
+            <td><a href="http://localhost:3000/api/movies/search/id/1" target="_blank">/api/movies/search/id/1</a></td>
+          </tr>
+          <tr>
+            <td>GET</td>
+            <td><a href="http://localhost:3000/api/movies/search/keywords/Fiction" target="_blank">/api/movies/search/keywords/Fiction</a></td>
+          </tr>
+          <tr>
+            <td>GET</td>
+            <td><a href="http://localhost:3000/api/categories" target="_blank">/api/categories</a></td>
+          </tr>
+          <tr>
+            <td>GET</td>
+            <td><a href="http://localhost:3000/api/countries" target="_blank">/api/countries</a></td>
+          </tr>
+          <tr>
+            <td>GET</td>
+            <td><a href="http://localhost:3000/api/keywords" target="_blank">/api/keywords</a></td>
+          </tr>
+          <tr>
+            <td>POST</td>
+            <td>/movies</td>
+          </tr>
+          <tr>
+            <td>POST</td>
+            <td>/api/categories</td>
+          </tr>
+          <tr>
+            <td>POST</td>
+            <td>/api/keywords</td>
+          </tr>
+          <tr>
+            <td>PUT</td>
+            <td>/api/categories/1</td>
+          </tr>
+          <tr>
+            <td>DELETE</td>
+            <td>/api/categories/1</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <footer>Magpie Movie API Copyright 2022</footer>
 </div>
