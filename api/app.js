@@ -120,20 +120,51 @@ app.get("/users/:id", authenticateToken, async (req, res) => {
 //movie route
 //add movies
 app.post("/movies", authenticateToken, async (req, res) => {
-  let newMovie = await Movie.create(req.body);
-  res.json({ newMovie });
+  let movies = await Movie.create(req.body);
+  res.json({ movies });
 });
 
 //get all movies
 app.get("/api/movies", authenticateToken, async (req, res) => {
-  const allMovies = await Movie.findAll();
-  res.json({ allMovies });
+  const movies = await Movie.findAll({
+    include: [
+      {
+        model: Cast_Crew, as: "movieCast"
+      },
+      {
+        model: Cast_Crew, as: "movieCrew"
+      },
+      {
+        model: Category, as: "category"
+      },
+      {
+        model: Country, as: "country"
+      }
+    ]
+  });
+  res.json({ movies });
 });
 
 //get movies by id
-app.get("/api/movies/:id", authenticateToken, async (req, res) => {
-  const getMovie = await Movie.findByPk(req.params.id);
-  res.json({getMovie});
+app.get("/api/movies/search/id/:id", authenticateToken, async (req, res) => {
+  const movie = await Movie.findByPk(req.params.id,
+    {
+      include: [
+        {
+          model: Cast_Crew, as: "movieCast"
+        },
+        {
+          model: Cast_Crew, as: "movieCrew"
+        },
+        {
+          model: Category, as: "category"
+        },
+        {
+          model: Country, as: "country"
+        }
+      ]
+    });
+  res.json({movie});
 });
 
 //get movies by keywords
@@ -153,10 +184,16 @@ app.get("/api/movies/search/keywords/:keywords", authenticateToken, async(req, r
         model: Keyword, where: { keyword_name: {[Op.like]: `%${req.params.keywords}%`}}
       },
       {
-        model: Cast_Crew, as: "cast_crew"
+        model: Cast_Crew, as: "movieCast"
       },
       {
-        model: Cast_Crew, as: "movieCast_crew"
+        model: Cast_Crew, as: "movieCrew"
+      },
+      {
+        model: Category, as: "category"
+      },
+      {
+        model: Country, as: "country"
       }
     ]
   })

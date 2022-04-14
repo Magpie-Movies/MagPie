@@ -10,6 +10,22 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+    <style>
+        .form-control {
+            background-color: #0d0c0c;
+            color: rgb(232, 242, 239);
+        }
+        .test-api {
+            font-weight: bold;
+            font-size: 15;
+        }
+        footer {
+            margin: 50px;
+            text-align: center;
+            font-style: italic;
+            color: #20cacaee;
+        }
+    </style>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <title>Landing page</title>
 </head>
@@ -30,15 +46,17 @@
     <h3>Try it</h3>
     <p>Run this code here</p>
     <div class="form-group">
-        <textarea class="form-control" id="exampleFormControlTextarea3" rows="4"></textarea>
+        <textarea class="form-control test-api" id="exampleFormControlTextarea3" rows="3">fetch('http://localhost:3000/api/movies/search/id/1')
+            .then(response => response.json())
+            .then(json => console.log(json))</textarea>
     </br>
     </div>
     <div>
-        <button type="button" class="btn btn-info btn_rounded">Run script</button>
+        <button type="button" class="btn btn-info btn_rounded" onclick="displayMovie()">Run script</button>
     </div>
     <div class="form-group">
     </br>
-        <textarea class="form-control" id="exampleFormControlTextarea3" rows="4">{}</textarea>
+        <textarea class="form-control result" id="output" rows="4">{}</textarea>
     </br>
     </div>
     <h2>Routes</h2>
@@ -50,15 +68,63 @@
             <tbody>
               <tr>
                 <td>GET</td>
-                <td>/api/movies</td>
+                <td><a href="http://localhost:3000/api/movies" target="_blank">/api/movies</a></td>
               </tr>
               <tr>
                 <td>GET</td>
-                <td>/api/movies/1</td>
+                <td><a href="http://localhost:3000/api/movies/search/id/1" target="_blank">/api/movies/search/id/1</a></td>
+              </tr>
+              <tr>
+                <td>GET</td>
+                <td><a href="http://localhost:3000/api/movies/search/keywords/Fiction" target="_blank">/api/movies/search/keywords/Fiction</a></td>
+              </tr>
+              <tr>
+                <td>GET</td>
+                <td><a href="http://localhost:3000/api/categories" target="_blank">/api/categories</a></td>
+              </tr>
+              <tr>
+                <td>GET</td>
+                <td><a href="http://localhost:3000/api/countries" target="_blank">/api/countries</a></td>
+              </tr>
+              <tr>
+                <td>GET</td>
+                <td><a href="http://localhost:3000/api/keywords" target="_blank">/api/keywords</a></td>
+              </tr>
+              <tr>
+                <td>POST</td>
+                <td>/movies</td>
+              </tr>
+              <tr>
+                <td>POST</td>
+                <td>/api/categories</td>
+              </tr>
+              <tr>
+                <td>POST</td>
+                <td>/api/keywords</td>
+              </tr>
+              <tr>
+                <td>PUT</td>
+                <td>/api/categories/1</td>
+              </tr>
+              <tr>
+                <td>DELETE</td>
+                <td>/api/categories/1</td>
               </tr>
             </tbody>
           </table>
+          <table id="employees"></table>
     </div>
+    <footer>Magpie Movie API Copyright 2022</footer>
 </div>
+<script>
+// Defining async function
+async function displayMovie() {
+    fetch("http://localhost:3000/api/movies/search/id/1")
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("output").innerHTML = data;
+    })
+}
+</script>
 </body>
 </html>

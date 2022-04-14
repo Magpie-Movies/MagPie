@@ -61,7 +61,7 @@ const { Movie_Production } = require("./models/movie_production");
   })
   Movie.belongsToMany(Cast_Crew, {
     through: Movie_Crew,
-    as: "movieCast_crew",
+    as: "movieCrew",
     foreignKey: "movie_id",
   })
 
@@ -72,7 +72,7 @@ const { Movie_Production } = require("./models/movie_production");
   })
   Movie.belongsToMany(Cast_Crew, {
     through: Movie_Cast,
-    as: "cast_crew",
+    as: "movieCast",
     foreignKey: "movie_id",
   })
 
