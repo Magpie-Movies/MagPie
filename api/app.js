@@ -18,6 +18,12 @@ const { use } = require("bcrypt/promises");
 // initialise Express
 const app = express();
 
+// require cors
+const cors = require('cors')
+
+//allow cross-origin resource sharing
+app.use(cors());
+
 // serve static assets from the public/ folder
 app.use(express.static(__dirname + "/public"));
 // specify out request bodies are json
