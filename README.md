@@ -1,3 +1,10 @@
+#### A RESTful API is an architectural style for an application program interface (API) that uses HTTP requests to access and use data. That data can be used to GET, PUT, POST and DELETE data types, which refers to the reading, updating, creating and deleting of operations concerning resources
+
+### ![image](https://user-images.githubusercontent.com/61039707/163583974-ac4eefed-e1bc-4b8f-97c0-427d27d47fa3.png)
+### ![image](https://user-images.githubusercontent.com/61039707/163584094-201ea0ac-fbff-40eb-a008-e9e380a43b6d.png)
+
+
+
 # Project MagPie https://youtu.be/kKtbmSVktCY
 
 ## *A Site to enjoy your Movie collections*
