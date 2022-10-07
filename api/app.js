@@ -167,6 +167,27 @@ app.get("/api/movies", authenticateToken, async (req, res) => {
   res.json({ movies });
 });
 
+//get all movies without authenticateToken
+app.get("/movies", async (req, res) => {
+  const movies = await Movie.findAll({
+    include: [
+      {
+        model: Cast_Crew, as: "movieCast"
+      },
+      {
+        model: Cast_Crew, as: "movieCrew"
+      },
+      {
+        model: Category, as: "category"
+      },
+      {
+        model: Country, as: "country"
+      }
+    ]
+  });
+  res.json({ movies });
+});
+
 //get movies by id
 app.get("/api/movies/search/id/:id", authenticateToken, async (req, res) => {
   const movie = await Movie.findByPk(req.params.id, {
@@ -191,6 +212,29 @@ app.get("/api/movies/search/id/:id", authenticateToken, async (req, res) => {
   });
   res.json({ movie });
 });
+
+//get movies by id without authenticateToken
+app.get("/movies/search/id/:id", async (req, res) => {
+  const movie = await Movie.findByPk(req.params.id,
+    {
+      include: [
+        {
+          model: Cast_Crew, as: "movieCast"
+        },
+        {
+          model: Cast_Crew, as: "movieCrew"
+        },
+        {
+          model: Category, as: "category"
+        },
+        {
+          model: Country, as: "country"
+        }
+      ]
+    });
+  res.json({movie});
+});
+
 
 //get movies by keywords
 // app.get("/api/movies/search/keywords/:keywords", authenticateToken, async(req, res) => {
@@ -234,7 +278,31 @@ app.get(
   }
 );
 
-//category
+// //get movies by keywords without authenticateToken
+app.get("/movies/search/keywords/:keywords", async(req, res) => {
+  const movies = await Movie.findAll({
+    include: [
+      {
+        model: Keyword, where: { keyword_name: {[Op.like]: `%${req.params.keywords}%`}}
+      },
+      {
+        model: Cast_Crew, as: "movieCast"
+      },
+      {
+        model: Cast_Crew, as: "movieCrew"
+      },
+      {
+        model: Category, as: "category"
+      },
+      {
+        model: Country, as: "country"
+      }
+    ]
+  })
+  res.json({movies})
+})
+
+//category 
 //add category entries to db
 app.post("/api/categories", authenticateToken, async (req, res) => {
   const newCategory = await Category.create(req.body);
@@ -243,6 +311,12 @@ app.post("/api/categories", authenticateToken, async (req, res) => {
 
 //get all categories
 app.get("/api/categories", authenticateToken, async (req, res) => {
+  const allCategories = await Category.findAll();
+  res.json({ allCategories });
+});
+
+//get all categories without authenticateTOken
+app.get("/categories", async(req, res) => {
   const allCategories = await Category.findAll();
   res.json({ allCategories });
 });
@@ -290,6 +364,12 @@ app.get("/api/countries", authenticateToken, async (req, res) => {
   res.json({ allCountries });
 });
 
+//get all countries without authenticateToken
+app.get("/countries", async(req, res) => {
+  const allCountries = await Country.findAll();
+  res.json({allCountries});
+});
+
 //get country by id
 app.get("/api/countries/id/:id", authenticateToken, async (req, res) => {
   let getCountry = await Country.findByPk(req.params.id);
@@ -334,6 +414,12 @@ app.get("/api/keywords", authenticateToken, async (req, res) => {
   let allKeywords = await Keyword.findAll();
   res.json({ allKeywords });
 });
+
+//get keywords without authenticateToken
+app.get("/keywords", async(req, res) => {
+  let allKeywords = await Keyword.findAll();
+  res.json({allKeywords})
+})
 
 //get keywords by id
 app.get("/api/keywords/id/:id", authenticateToken, async (req, res) => {

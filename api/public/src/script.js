@@ -1,5 +1,5 @@
 function runRoute() {
-  fetch(`http://localhost:3000/api/movies/search/id/1`)
+  fetch(`http://localhost:3000/movies/search/id/1`)
   .then(response => response.json())
     .then(data => {
       console.log(data)
