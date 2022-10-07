@@ -2,6 +2,9 @@ require("dotenv").config();
 const express = require("express");
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
+// require express-session
+const session = require("express-session");
+// require cookie parser
 const cookieParser = require("cookie-parser");
 //require basicAuth
 const basicAuth = require("express-basic-auth");
@@ -65,22 +68,26 @@ app.get("/signin", (req, res) => {
 
 app.post("/signup", async (req, res) => {
   const { username, password } = req.body;
-  const accessToken = jwt.sign({username, password}, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "1h",
-  });
+  const accessToken = jwt.sign(
+    { username, password },
+    process.env.ACCESS_TOKEN_SECRET,
+    {
+      expiresIn: "1h",
+    }
+  );
   bcrypt.hash(password, saltRounds, async function (err, hash) {
-    const newUser = await User.create({ username, password: hash })
-        res.cookie("AunToken", accessToken, {
-          maxAge: 900000,
-          httpOnly: true,
-        });
+    const newUser = await User.create({ username, password: hash });
+    res.cookie("AunToken", accessToken, {
+      maxAge: 900000,
+      httpOnly: true,
+    });
     res.json({ newUser });
   });
 });
 
 app.post("/signin", async (req, res) => {
-const password = req.body.password;
-const username = req.body.username;
+  const password = req.body.password;
+  const username = req.body.username;
   // Authenticate User
   const user = await User.findOne({
     where: { username: req.body.username },
@@ -90,16 +97,21 @@ const username = req.body.username;
   } else {
     bcrypt.compare(password, user.password, async function (err, result) {
       if (result) {
-        const accessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, {
-          expiresIn: "1h",
-        });
+        const accessToken = jwt.sign(
+          { user },
+          process.env.ACCESS_TOKEN_SECRET,
+          {
+            expiresIn: "1h",
+          }
+        );
         // Redirect user to the protected page
         res.cookie("AunToken", accessToken, {
           maxAge: 900000,
           httpOnly: true,
           secure: true,
         });
-        res.sendFile(__dirname + "/public/api.html");
+        res.json(accessToken);
+        // res.sendFile(__dirname + "/public/api.html");
       } else {
         res.status(401).send("Password incorrect");
       }
@@ -113,7 +125,7 @@ app.get("/logout", (req, res) => {
   return res.redirect("/");
 });
 
-app.get("/users", authenticateToken, cookieJwt, async (req, res) => {
+app.get("/users", authenticateToken, async (req, res) => {
   const Allusers = await User.findAll();
   res.json(Allusers);
 });
@@ -476,7 +488,7 @@ app.post("/api/movie_cast", authenticateToken, async (req, res) => {
 });
 
 //movie_crew
-app.post("/api/mmovie_crew", authenticateToken, async (req, res) => {
+app.post("/api/movie_crew", authenticateToken, async (req, res) => {
   let newMovieCrew = await Movie_Crew.create(req.body);
   res.json({ newMovieCrew });
 });
@@ -507,7 +519,7 @@ async function dbAuthorizer(username, password, callback) {
   }
 }
 
-app.get("/test", cookieJwt, (req, res) => {
+app.get("/test", authenticateToken, (req, res) => {
   res.sendFile(__dirname + "/public/test.html");
 });
 
@@ -517,25 +529,15 @@ function authenticateToken(req, res, next) {
   if (token == null) return res.sendStatus(401);
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
-    next();
+    if (err) {
+      res.clearCookie("token");
+      return res.sendStatus(403);
+    } else {
+      req.user = user;
+      next();
+    }
   });
 }
-
-// set up cookie authentication
-function cookieJwt(req, res, next) {
-  const token = req.cookies.token;
-  console.log("token", token);
-  try {
-const user = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    req.user = user;
-    next();
-  } catch (err) {
-    res.clearCookie('token')
-    return res.redirect('/login')
-  }
-};
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");
